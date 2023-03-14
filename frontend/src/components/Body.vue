@@ -22,14 +22,20 @@
 
         <!--        блок с информацией по фото-->
         <div class="block-uploaded-info">
+          <div class="block-uploaded-info__color">
           <h3 style="display:inline;">основные цвета: </h3>
-          <div id="selected-color" :style="{'background-color':clothInfo.color}"/>
+          <div class="selected-color" :style="{'background-color':clothInfo.color}"/>
+          </div>
           <h3>тип одежды: {{clothInfo.type}}</h3>
         </div>
 
         <!--        блок с информацией по комплекту-->
         <div class="block-offer-info">
-
+          <div class="block-uploaded-info__color">
+            <h3 style="display:inline;">предлагаемые цвета: </h3>
+            <div class="selected-color" :style="{'background-color':clothInfo.color}"/>
+          </div>
+          <h3>предлагаемый комплект: {{clothInfo.type}}</h3>
         </div>
       </div>
 
@@ -74,11 +80,21 @@
 
 .block-uploaded-info {
   height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-#selected-color {
-  height: 50px;
-  width: 50px;
+.block-uploaded-info__color {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.selected-color {
+  height: 25px;
+  width: 25px;
   outline: 2px solid #000;
   display:inline-block;
 
@@ -86,8 +102,11 @@
 
 .block-offer-info {
   height: 50%;
-  background-color: #56ec2a;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>
 
@@ -115,7 +134,7 @@ export default {
         reader.readAsDataURL(input.files[0]);
       }
       //TODO заменить на вызов бэка
-      this.clothInfo = {type: "футболка", color: ["#ff8300"]}
+      this.clothInfo = {type: "футболка", color: ["#ffede0"], combination_color:[["#001a68", "#ffbf87"], ["#00ffd1", "#ff8300"]]}
     },
     onFileUpload() {
       const formData = new FormData

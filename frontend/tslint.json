@@ -1,7 +1,6 @@
 {
   "extends": [
-    "tslint:recommended",
-    "rxjs-tslint-rules"
+    "tslint:recommended"
   ],
   "rules": {
     "align": [
@@ -76,21 +75,6 @@
         "always"
       ]
     },
-    "trailing-comma": [
-      true,
-      {
-        "multiline": {
-          "arrays": "never",
-          "objects": "never",
-          "functions": "never",
-          "imports": "never",
-          "exports": "never",
-          "typeLiterals": "never"
-        },
-        "singleline": "never",
-        "esSpecCompliant": true
-      }
-    ],
     "triple-equals": true,
     "typedef": [
       true,

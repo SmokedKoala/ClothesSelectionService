@@ -1,0 +1,27 @@
+@import '~src/style/shared/variables';
+@import '~src/style/shared/colors';
+
+:host {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: .8em;
+  width: 100%;
+  padding: 0 @body-padding;
+  background-color: @secondary;
+}
+
+.icon {
+  color: @text-primary;
+
+  &:hover {
+    color: @text-secondary;
+  }
+}
+
+.header {
+  &__title {
+    color: @text-primary;
+    margin-right: auto;
+  }
+}

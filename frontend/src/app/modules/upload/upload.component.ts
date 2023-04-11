@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TuiFileLike } from '@taiga-ui/kit';
 import { distinctUntilChanged, Subject } from 'rxjs';
 import { FormControl } from '@angular/forms';
+import { UploadedImageUrlService } from '@modules/upload/uploaded-image-url.service';
 
 @Component({
   selector: 'cls-upload',
@@ -10,13 +11,15 @@ import { FormControl } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UploadComponent {
-  uploadedImageUrl: string | null = null;
   readonly uploadedFileControl = new FormControl();
 
   readonly rejectedFiles$ = new Subject<TuiFileLike | null>();
   readonly loadedFiles$ = this.uploadedFileControl.valueChanges.pipe(
     distinctUntilChanged(),
   );
+
+  constructor(private readonly uploadedImageUrlService: UploadedImageUrlService) {
+  }
 
   onReject(file: TuiFileLike | readonly TuiFileLike[]): void {
     this.rejectedFiles$.next(file as TuiFileLike);
@@ -32,8 +35,10 @@ export class UploadComponent {
   }
 
   imageToUrl(file: TuiFileLike): string {
-    this.uploadedImageUrl = URL.createObjectURL(file as unknown as Blob);
+    const uploadedImageUrl = URL.createObjectURL(file as unknown as Blob);
 
-    return this.uploadedImageUrl;
+    this.uploadedImageUrlService.imageUrl.next(uploadedImageUrl);
+
+    return uploadedImageUrl;
   }
 }

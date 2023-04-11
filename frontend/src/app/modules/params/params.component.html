@@ -1,0 +1,127 @@
+<ng-container *ngIf="imageUrl as src; else noUrlError">
+  <div class="content">
+    <img
+      loading="lazy"
+      alt="Загруженное изображение"
+      class="content__image tui-space_bottom-6"
+      [src]="src"
+    />
+
+    <tui-island
+      size="l"
+      class="content__info"
+    >
+      <h3 class="content__info__title">Параметры поиска</h3>
+
+      <div class="content__info__about-clothes tui-space_bottom-6">
+        <p>Тип одежды</p>
+        <span class="tui-text_body-m">{{recognizedClothesType}}</span>
+        <p>Цвет одежды</p>
+        <svg width="55" height="55">
+          <rect width="50" height="50" [style.fill]="recognizedClothesHexColor"/>
+        </svg>
+      </div>
+
+      <div class="content__info__params">
+        <p>Предлагаемые цвета</p>
+        <div class="colors">
+          <div class="colors-palette">
+            <svg width="55" height="55">
+              <rect width="50" height="50" [style.fill]="recognizedClothesHexColor"/>
+            </svg>
+            <svg width="55" height="55">
+              <rect width="50" height="50" [style.fill]="recognizedClothesHexColor"/>
+            </svg>
+            <svg width="55" height="55">
+              <rect width="50" height="50" [style.fill]="recognizedClothesHexColor"/>
+            </svg>
+          </div>
+
+          <button
+            tuiIconButton
+            type="button"
+            appearance="flat"
+            size="m"
+            icon="tuiIconEditLarge"
+            (click)="openEditColorsDialog()"
+          ></button>
+        </div>
+
+        <p>Предалагаемый комплект</p>
+        <div class="suggested-clothes">
+          <div class="clothes-palette">
+            <svg width="55" height="55">
+              <rect width="50" height="50" [style.fill]="recognizedClothesHexColor"/>
+            </svg>
+            <svg width="55" height="55">
+              <rect width="50" height="50" [style.fill]="recognizedClothesHexColor"/>
+            </svg>
+            <svg width="55" height="55">
+              <rect width="50" height="50" [style.fill]="recognizedClothesHexColor"/>
+            </svg>
+          </div>
+
+          <button
+            tuiIconButton
+            type="button"
+            appearance="flat"
+            size="m"
+            icon="tuiIconEditLarge"
+            (click)="openEditClothesDialog()"
+          ></button>
+        </div>
+
+        <p>Выбранный город</p>
+        <tui-select
+          formControlName="city"
+          tuiDropdownLimitWidth="fixed"
+          [valueContent]="citySelectItem"
+        >
+          Город
+          <tui-data-list-wrapper
+            *tuiDataList
+            [items]="cities"
+            [itemContent]="citySelectItem"
+          ></tui-data-list-wrapper>
+        </tui-select>
+      </div>
+    </tui-island>
+  </div>
+</ng-container>
+
+<div class="buttons tui-space_top-3">
+  <a
+    tuiButton
+    type="button"
+    appearance="secondary"
+    icon="tuiIconArrowLeft"
+    [routerLink]="['/upload']"
+  >
+    Загрузить другое изображение
+  </a>
+
+  <a
+    *ngIf="imageUrl"
+    tuiButton
+    type="button"
+    icon="tuiIconArrowRight"
+    [routerLink]="['/search']"
+  >
+    Перейти к поиску
+  </a>
+</div>
+
+<ng-template #noUrlError>
+  <tui-notification
+    status="error"
+    class="error-notification tui-space_bottom-6"
+  >
+    Не удалось обработать ваше изображение.
+    Попробуйте загрузить его еще раз или загрузите другое изображение.
+  </tui-notification>
+</ng-template>
+
+
+<ng-template #citySelectItem let-item>
+  {{item.name}}
+</ng-template>

@@ -27,6 +27,7 @@ export class UploadComponent {
 
   removeFile(): void {
     this.uploadedFileControl.setValue(null);
+    this.uploadedImageUrlService.imageUrl = null;
   }
 
   clearRejected(): void {
@@ -37,7 +38,7 @@ export class UploadComponent {
   imageToUrl(file: TuiFileLike): string {
     const uploadedImageUrl = URL.createObjectURL(file as unknown as Blob);
 
-    this.uploadedImageUrlService.imageUrl.next(uploadedImageUrl);
+    this.uploadedImageUrlService.imageUrl = uploadedImageUrl;
 
     return uploadedImageUrl;
   }

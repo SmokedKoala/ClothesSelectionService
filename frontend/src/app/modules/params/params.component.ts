@@ -8,7 +8,7 @@ import { UploadedImageUrlService } from '@modules/upload/uploaded-image-url.serv
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ParamsComponent {
-  imageUrl = '';
+  imageUrl: string | null = null;
 
   readonly recognizedClothesType = 'Футболка';
   readonly recognizedClothesHexColor = '#000';
@@ -28,7 +28,7 @@ export class ParamsComponent {
   ];
 
   constructor(private readonly uploadedImageUrlService: UploadedImageUrlService) {
-    this.imageUrl = this.uploadedImageUrlService.getUrl();
+    this.imageUrl = this.uploadedImageUrlService.imageUrl;
   }
 
   getComplementaryColors(): string[] {

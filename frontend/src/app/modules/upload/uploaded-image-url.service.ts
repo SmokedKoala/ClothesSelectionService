@@ -1,15 +1,29 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
+import { Inject, Injectable } from '@angular/core';
+import { LOCAL_STORAGE } from '@ng-web-apis/common';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadedImageUrlService {
-  readonly imageUrl = new BehaviorSubject<string>('');
-  readonly imageUrl$ = this.imageUrl.pipe(distinctUntilChanged());
+  private readonly storageKey: string = 'uploadedToClothesSelectionServiceImageUrl';
 
-  // TODO: change to localStorage
-  getUrl(): string {
-    return this.imageUrl.value;
+  constructor(@Inject(LOCAL_STORAGE) private readonly localStorage: Storage) {
+  }
+
+  get imageUrl(): string | null {
+    return this.localStorage.getItem(this.storageKey);
+  }
+
+  set imageUrl(url: string | null) {
+    if (url) {
+      this.localStorage.setItem(this.storageKey, url);
+    } else {
+      this.clear();
+    }
+  }
+
+  private clear(): void {
+    this.localStorage.removeItem(this.storageKey);
   }
 }

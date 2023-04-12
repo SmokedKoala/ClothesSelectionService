@@ -1,0 +1,72 @@
+<div
+  [formGroup]="form"
+  class="clothes-types"
+>
+  <p class="clothes-types__type">{{data.firstSuggestedClothesType}}</p>
+  <tui-select
+    formControlName="firstClothes"
+    tuiDropdownLimitWidth="fixed"
+    [valueContent]="clothSelectItem"
+  >
+    Вид одежды
+    <tui-data-list-wrapper
+      *tuiDataList
+      [items]="firstClothes"
+      [itemContent]="clothSelectItem"
+    ></tui-data-list-wrapper>
+  </tui-select>
+  <img
+    loading="lazy"
+    alt="Первый вид выбранной одежды: {{data.firstSuggestedClothesType}}"
+    class="clothes-types__image"
+    [src]="form.controls.firstClothes.value?.imageSrc"
+  />
+
+
+  <p class="clothes-types__type">{{data.secondSuggestedClothesType}}</p>
+  <tui-select
+    formControlName="secondClothes"
+    tuiDropdownLimitWidth="fixed"
+    [valueContent]="clothSelectItem"
+  >
+    Вид одежды
+    <tui-data-list-wrapper
+      *tuiDataList
+      [items]="secondClothes"
+      [itemContent]="clothSelectItem"
+    ></tui-data-list-wrapper>
+  </tui-select>
+  <img
+    loading="lazy"
+    alt="Второй вид выбранной одежды: {{data.secondSuggestedClothesType}}"
+    class="clothes-types__image"
+    [src]="form.controls.secondClothes.value?.imageSrc"
+  />
+</div>
+
+<div class="buttons">
+  <button
+    tuiButton
+    appearance="secondary"
+    type="button"
+    size="l"
+    (click)="onCancel()"
+  >
+    Отмена
+  </button>
+
+  <button
+    tuiButton
+    type="submit"
+    size="l"
+    icon="tuiIconCheckCircleLarge"
+    (click)="onAccept()"
+  >
+    Подтвердить выбор
+  </button>
+</div>
+
+
+<ng-template #clothSelectItem let-item>
+  {{item.name}}
+</ng-template>

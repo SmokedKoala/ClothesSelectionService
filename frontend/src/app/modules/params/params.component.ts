@@ -1,5 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Injector } from '@angular/core';
 import { UploadedImageUrlService } from '@modules/upload/uploaded-image-url.service';
+import { TuiDialogService } from '@taiga-ui/core';
+import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { EditClothesDialogComponent } from '@modules/params/edit-clothes-dialog/edit-clothes-dialog.component';
 
 @Component({
   selector: 'cls-params',
@@ -27,7 +30,10 @@ export class ParamsComponent {
     {name: 'Уфа', value: 'ufa'},
   ];
 
-  constructor(private readonly uploadedImageUrlService: UploadedImageUrlService) {
+  constructor(
+    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    @Inject(Injector) private readonly injector: Injector,
+    private readonly uploadedImageUrlService: UploadedImageUrlService) {
     this.imageUrl = this.uploadedImageUrlService.imageUrl;
   }
 
@@ -37,7 +43,28 @@ export class ParamsComponent {
   }
 
   openEditClothesDialog() {
-    //  TODO: implement
+    this.dialogService.open(
+      new PolymorpheusComponent(EditClothesDialogComponent, this.injector),
+      {
+        label: 'Изменение типа подбираемой одежды',
+        data: {
+          firstSuggestedClothesType: 'Обувь',
+          secondSuggestedClothesType: 'Поясная одежда',
+          firstSuggestedClothes: {name: 'Кеды', value: 'keds', imageSrc: ''},
+          secondSuggestedClothes: {name: 'Шорты', value: 'shorts', imageSrc: ''},
+        },
+        dismissible: false,
+        size: 'auto',
+      }
+    )
+      .subscribe(
+        {
+          next: result => {
+            // TODO pass result to images
+            console.log('result', result);
+          },
+        }
+      );
   }
 
   openEditColorsDialog() {

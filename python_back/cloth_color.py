@@ -1,6 +1,9 @@
 from colorthief import ColorThief
 
-ct = ColorThief("2.png")
-pallete = ct.get_palette(color_count=2)
 
-print(pallete)
+def get_main_colors(filename):
+  ct = ColorThief(filename)
+  pallete = ct.get_palette(color_count=2)
+  return pallete
+
+

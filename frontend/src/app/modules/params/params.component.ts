@@ -3,6 +3,7 @@ import { UploadedImageUrlService } from '@modules/upload/uploaded-image-url.serv
 import { TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { EditClothesDialogComponent } from '@modules/params/edit-clothes-dialog/edit-clothes-dialog.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'cls-params',
@@ -11,8 +12,6 @@ import { EditClothesDialogComponent } from '@modules/params/edit-clothes-dialog/
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ParamsComponent {
-  imageUrl: string | null = null;
-
   readonly recognizedClothesType = 'Футболка';
   readonly recognizedClothesHexColor = '#000';
 
@@ -29,6 +28,12 @@ export class ParamsComponent {
     {name: 'Ростов-на-Дону', value: 'rostov'},
     {name: 'Уфа', value: 'ufa'},
   ];
+
+  imageUrl: string | null = null;
+
+  firstSuggestedClothes = new FormControl();
+  secondSuggestedClothes = new FormControl();
+
 
   constructor(
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
@@ -50,20 +55,18 @@ export class ParamsComponent {
         data: {
           firstSuggestedClothesType: 'Обувь',
           secondSuggestedClothesType: 'Поясная одежда',
-          firstSuggestedClothes: {name: 'Кеды', value: 'keds', imageSrc: ''},
-          secondSuggestedClothes: {name: 'Шорты', value: 'shorts', imageSrc: ''},
+          firstSuggestedClothes: this.firstSuggestedClothes.value || {name: 'Кеды', value: 'keds', imageSrc: ''},
+          secondSuggestedClothes: this.secondSuggestedClothes.value || {name: 'Шорты', value: 'shorts', imageSrc: ''},
         },
         dismissible: false,
         size: 'auto',
       }
     )
       .subscribe(
-        {
-          next: result => {
-            // TODO pass result to images
-            console.log('result', result);
-          },
-        }
+        (result: any) => {
+          this.firstSuggestedClothes.setValue(result.firstClothes);
+          this.secondSuggestedClothes.setValue(result.secondClothes);
+        },
       );
   }
 

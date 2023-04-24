@@ -22,25 +22,24 @@ export class EditClothesDialogComponent {
   );
 
   readonly firstClothes = [
-    {name: 'Кеды', value: 'keds', imageSrc: 'assets/images/footwear/keds.png'},
-    {name: 'Кроссовки', value: 'sneakers', imageSrc: 'assets/images/footwear/sneakers.png'},
-    {name: 'Ботинки', value: 'boots', imageSrc: 'assets/images/footwear/boots.png'},
-    {name: 'Туфли', value: 'shoes', imageSrc: 'assets/images/footwear/shoes.png'},
-    {name: 'Сапоги', value: 'boots', imageSrc: 'assets/images/footwear/boots.png'},
-    {name: 'Тапочки', value: 'slippers', imageSrc: 'assets/images/footwear/slippers.png'},
-    {name: 'Сандали', value: 'sandals', imageSrc: 'assets/images/footwear/sandals.png'},
-    {name: 'Босоножки', value: 'pumps', imageSrc: 'assets/images/footwear/pumps.png'},
+    {name: 'Кеды', value: 'keds', imageSrc: 'assets/images/footwear/keds.jpg'},
+    {name: 'Кроссовки', value: 'sneakers', imageSrc: 'assets/images/footwear/sneakers.jpg'},
+    {name: 'Ботинки', value: 'boots', imageSrc: 'assets/images/footwear/boots.jpg'},
+    {name: 'Туфли', value: 'shoes', imageSrc: 'assets/images/footwear/shoes.jpg'},
+    {name: 'Сапоги', value: 'boots', imageSrc: 'assets/images/footwear/high-boots.jpg'},
+    {name: 'Тапочки', value: 'slippers', imageSrc: 'assets/images/footwear/slippers.avif'},
+    {name: 'Сандали', value: 'sandals', imageSrc: 'assets/images/footwear/sandals.jpg'},
+    {name: 'Босоножки', value: 'pumps', imageSrc: 'assets/images/footwear/pumps.jpg'},
     {name: 'Подкрадули', value: 'podkraduli', imageSrc: 'assets/images/footwear/podkraduli.jpg'},
     {name: 'Бархатные тяги', value: 'barkh_tyagi', imageSrc: 'assets/images/footwear/barkh_tyagi.jpg'},
   ];
 
   readonly secondClothes = [
-    {name: 'Шорты', value: 'shorts', imageSrc: 'assets/images/shorts.png'},
-    {name: 'Брюки', value: 'trousers', imageSrc: 'assets/images/trousers.png'},
-    {name: 'Юбка', value: 'skirt', imageSrc: 'assets/images/skirt.png'},
-    {name: 'Джинсы', value: 'jeans', imageSrc: 'assets/images/jeans.png'},
-    {name: 'Штаны', value: 'pants', imageSrc: 'assets/images/pants.png'},
-    {name: 'Леггинсы', value: 'leggings', imageSrc: 'assets/images/leggings.png'},
+    {name: 'Шорты', value: 'shorts', imageSrc: 'assets/images/bottoms/shorts.jpg'},
+    {name: 'Брюки', value: 'trousers', imageSrc: 'assets/images/bottoms/trousers.jpg'},
+    {name: 'Юбка', value: 'skirt', imageSrc: 'assets/images/bottoms/skirt.jpg'},
+    {name: 'Джинсы', value: 'jeans', imageSrc: 'assets/images/bottoms/jeans.avif'},
+    {name: 'Леггинсы', value: 'leggings', imageSrc: 'assets/images/bottoms/leggings.avif'},
   ];
 
   get data(): any {

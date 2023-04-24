@@ -26,13 +26,13 @@
         <p>Предлагаемые цвета</p>
         <div class="colors">
           <div class="colors-palette">
-            <svg width="55" height="55">
+            <svg width="50" height="50">
               <rect width="50" height="50" [style.fill]="recognizedClothesHexColor"/>
             </svg>
-            <svg width="55" height="55">
+            <svg width="50" height="50">
               <rect width="50" height="50" [style.fill]="recognizedClothesHexColor"/>
             </svg>
-            <svg width="55" height="55">
+            <svg width="50" height="50">
               <rect width="50" height="50" [style.fill]="recognizedClothesHexColor"/>
             </svg>
           </div>
@@ -50,12 +50,22 @@
         <p>Предалагаемый комплект</p>
         <div class="suggested-clothes">
           <div class="clothes-palette">
-            <svg width="55" height="55">
-              <rect width="50" height="50" [style.fill]="recognizedClothesHexColor"/>
-            </svg>
-            <svg width="55" height="55">
-              <rect width="50" height="50" [style.fill]="recognizedClothesHexColor"/>
-            </svg>
+            <img
+              class="suggested-cloth"
+              *ngIf="firstSuggestedClothes.value?.imageSrc; else emptyClothSvg"
+              [src]="firstSuggestedClothes.value?.imageSrc"
+            >
+            <img
+              class="suggested-cloth"
+              *ngIf="secondSuggestedClothes.value?.imageSrc; else emptyClothSvg"
+              [src]="secondSuggestedClothes.value?.imageSrc"
+            >
+
+            <ng-template #emptyClothSvg>
+              <svg width="50" height="50">
+                <rect width="50" height="50" [style.fill]="recognizedClothesHexColor"/>
+              </svg>
+            </ng-template>
           </div>
 
           <button

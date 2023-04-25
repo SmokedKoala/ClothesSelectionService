@@ -1,4 +1,6 @@
-export const footwearValues = [
+import { Clothes } from '../types/clothes';
+
+export const footwearValues: Clothes[] = [
   {name: 'Кеды', value: 'keds', imageSrc: 'assets/images/footwear/keds.jpg'},
   {name: 'Кроссовки', value: 'sneakers', imageSrc: 'assets/images/footwear/sneakers.jpg'},
   {name: 'Ботинки', value: 'boots', imageSrc: 'assets/images/footwear/boots.jpg'},
@@ -11,10 +13,13 @@ export const footwearValues = [
   {name: 'Бархатные тяги', value: 'barkh_tyagi', imageSrc: 'assets/images/footwear/barkh_tyagi.jpg'},
 ];
 
-export const bottomValues = [
+export const bottomClothesValues: Clothes[] = [
   {name: 'Шорты', value: 'shorts', imageSrc: 'assets/images/bottoms/shorts.jpg'},
   {name: 'Брюки', value: 'trousers', imageSrc: 'assets/images/bottoms/trousers.jpg'},
   {name: 'Юбка', value: 'skirt', imageSrc: 'assets/images/bottoms/skirt.jpg'},
   {name: 'Джинсы', value: 'jeans', imageSrc: 'assets/images/bottoms/jeans.avif'},
   {name: 'Леггинсы', value: 'leggings', imageSrc: 'assets/images/bottoms/leggings.avif'},
 ];
+
+export const DEFAULT_FOOTWEAR_VALUE = footwearValues[0];
+export const DEFAULT_BOTTOM_CLOTHES_VALUE = bottomClothesValues[0];

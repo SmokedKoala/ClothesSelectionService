@@ -4,6 +4,12 @@ import { TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { EditClothesDialogComponent } from '@modules/params/edit-clothes-dialog/edit-clothes-dialog.component';
 import { FormControl } from '@angular/forms';
+import { DEFAULT_BOTTOM_CLOTHES_VALUE, DEFAULT_FOOTWEAR_VALUE } from '@shared/consts/clothes-select-values';
+import { Clothes } from '@shared/types/clothes';
+import { EditColorsDialogComponent } from '@modules/params/edit-colors-dialog/edit-colors-dialog.component';
+import { tuiIsPresent } from '@taiga-ui/cdk';
+import { filter } from 'rxjs';
+import { citiesValues } from '@shared/consts/cities-select-values';
 
 @Component({
   selector: 'cls-params',
@@ -14,26 +20,16 @@ import { FormControl } from '@angular/forms';
 export class ParamsComponent {
   readonly recognizedClothesType = 'Футболка';
   readonly recognizedClothesHexColor = '#000';
-
-  readonly cities = [
-    {name: 'Москва', value: 'moscow'},
-    {name: 'Санкт-Петербург', value: 'spb'},
-    {name: 'Новосибирск', value: 'nsk'},
-    {name: 'Екатеринбург', value: 'ekb'},
-    {name: 'Нижний Новгород', value: 'nnov'},
-    {name: 'Казань', value: 'kzn'},
-    {name: 'Челябинск', value: 'chel'},
-    {name: 'Омск', value: 'omsk'},
-    {name: 'Самара', value: 'samara'},
-    {name: 'Ростов-на-Дону', value: 'rostov'},
-    {name: 'Уфа', value: 'ufa'},
-  ];
+  readonly firstSuggestedClothesType = 'Обувь';
+  readonly secondSuggestedClothesType = 'Поясная одежда';
+  readonly cities = citiesValues;
 
   imageUrl: string | null = null;
 
-  firstSuggestedClothes = new FormControl();
-  secondSuggestedClothes = new FormControl();
+  firstSuggestedClothes: FormControl<Clothes | null> = new FormControl(DEFAULT_FOOTWEAR_VALUE);
+  secondSuggestedClothes: FormControl<Clothes | null> = new FormControl(DEFAULT_BOTTOM_CLOTHES_VALUE);
 
+  suggestedClothesHexColors = ['#587880', '#c1df8a'];
 
   constructor(
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
@@ -53,15 +49,18 @@ export class ParamsComponent {
       {
         label: 'Изменение типа подбираемой одежды',
         data: {
-          firstSuggestedClothesType: 'Обувь',
-          secondSuggestedClothesType: 'Поясная одежда',
-          firstSuggestedClothes: this.firstSuggestedClothes.value || {name: 'Кеды', value: 'keds', imageSrc: ''},
-          secondSuggestedClothes: this.secondSuggestedClothes.value || {name: 'Шорты', value: 'shorts', imageSrc: ''},
+          firstSuggestedClothesType: this.firstSuggestedClothesType,
+          secondSuggestedClothesType: this.secondSuggestedClothesType,
+          firstSuggestedClothes: this.firstSuggestedClothes.value || DEFAULT_FOOTWEAR_VALUE,
+          secondSuggestedClothes: this.secondSuggestedClothes.value || DEFAULT_BOTTOM_CLOTHES_VALUE,
         },
         dismissible: false,
         size: 'auto',
       }
     )
+      .pipe(
+        filter(tuiIsPresent)
+      )
       .subscribe(
         (result: any) => {
           this.firstSuggestedClothes.setValue(result.firstClothes);
@@ -71,6 +70,24 @@ export class ParamsComponent {
   }
 
   openEditColorsDialog() {
-    // TODO: implement
+    this.dialogService.open(
+      new PolymorpheusComponent(EditColorsDialogComponent, this.injector),
+      {
+        label: 'Изменение цветов подбираемой одежды',
+        data: {
+          suggestedClothesHexColors: this.suggestedClothesHexColors
+        },
+        dismissible: false,
+        size: 'auto',
+      }
+    )
+      .pipe(
+        filter(tuiIsPresent)
+      )
+      .subscribe(
+        (selectedColors: any) => {
+          this.suggestedClothesHexColors = selectedColors;
+        },
+      );
   }
 }

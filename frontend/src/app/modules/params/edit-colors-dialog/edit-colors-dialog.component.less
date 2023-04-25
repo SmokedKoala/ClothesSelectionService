@@ -1,0 +1,27 @@
+@import '~src/style/shared/typography';
+
+.colors {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 20px;
+  column-gap: 20px;
+  margin: 28px;
+
+  &__label {
+    .get-typography(@font-size-xl, @font-line-height-xl, @font-weight-bold);
+    text-align: center;
+  }
+
+  &__color {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+  }
+}
+
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}

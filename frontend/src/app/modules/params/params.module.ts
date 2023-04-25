@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ParamsComponent } from './params.component';
 import { ParamsRoutingModule } from '@modules/params/params-routing.module';
-import { TuiButtonModule, TuiDropdownModule, TuiNotificationModule } from '@taiga-ui/core';
+import { TuiButtonModule, TuiDropdownModule, TuiHostedDropdownModule, TuiNotificationModule } from '@taiga-ui/core';
 import { TuiDataListWrapperModule, TuiIslandModule, TuiSelectModule } from '@taiga-ui/kit';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditClothesDialogComponent } from './edit-clothes-dialog/edit-clothes-dialog.component';
+import { EditColorsDialogComponent } from './edit-colors-dialog/edit-colors-dialog.component';
+import { TuiPaletteModule } from '@taiga-ui/addon-editor';
 
 
 const TUI_MODULES = [
@@ -15,12 +17,15 @@ const TUI_MODULES = [
   TuiNotificationModule,
   TuiSelectModule,
   TuiDropdownModule,
+  TuiHostedDropdownModule,
+  TuiPaletteModule,
 ];
 
 @NgModule({
   declarations: [
     ParamsComponent,
-    EditClothesDialogComponent
+    EditClothesDialogComponent,
+    EditColorsDialogComponent
   ],
   imports: [
     CommonModule,

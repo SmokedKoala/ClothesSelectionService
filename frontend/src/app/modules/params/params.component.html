@@ -26,15 +26,11 @@
         <p>Предлагаемые цвета</p>
         <div class="colors">
           <div class="colors-palette">
-            <svg width="50" height="50">
-              <rect width="50" height="50" [style.fill]="recognizedClothesHexColor"/>
-            </svg>
-            <svg width="50" height="50">
-              <rect width="50" height="50" [style.fill]="recognizedClothesHexColor"/>
-            </svg>
-            <svg width="50" height="50">
-              <rect width="50" height="50" [style.fill]="recognizedClothesHexColor"/>
-            </svg>
+            <ng-container *ngFor="let suggestedClothesHexColor of suggestedClothesHexColors">
+              <svg width="50" height="50">
+                <rect width="50" height="50" [style.fill]="suggestedClothesHexColor"/>
+              </svg>
+            </ng-container>
           </div>
 
           <button

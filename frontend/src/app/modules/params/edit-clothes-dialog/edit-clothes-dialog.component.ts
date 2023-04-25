@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { TuiDialogContext } from '@taiga-ui/core';
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
 import { FormControl, FormGroup } from '@angular/forms';
-import { bottomValues, footwearValues } from '@shared/clothes-select-values';
+import { bottomClothesValues, footwearValues } from '@shared/consts/clothes-select-values';
 
 
 @Component({
@@ -18,7 +18,7 @@ export class EditClothesDialogComponent {
   });
 
   readonly firstClothesSelectItems = footwearValues;
-  readonly secondClothesSelectItems = bottomValues;
+  readonly secondClothesSelectItems = bottomClothesValues;
 
   get data(): any {
     return this.context.data;

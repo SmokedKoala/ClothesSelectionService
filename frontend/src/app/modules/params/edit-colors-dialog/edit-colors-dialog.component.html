@@ -1,0 +1,62 @@
+<div class="colors">
+  <p class="colors__label">Цвет 1</p>
+  <p class="colors__label">Цвет 2</p>
+
+  <tui-hosted-dropdown
+    tuiDropdownAlign="left"
+    [content]="palette1"
+    [tuiDropdownMaxHeight]="999"
+    tuiDropdownLimitWidth="fixed"
+  >
+    <div
+      class="colors__color"
+      [style.background]="color1$ | async"
+    ></div>
+  </tui-hosted-dropdown>
+  <tui-hosted-dropdown
+    tuiDropdownAlign="left"
+    [content]="palette2"
+    [tuiDropdownMaxHeight]="999"
+    tuiDropdownLimitWidth="fixed"
+  >
+    <div
+      class="colors__color"
+      [style.background]="color2$ | async"
+    ></div>
+  </tui-hosted-dropdown>
+
+  <ng-template #palette1>
+    <tui-palette
+      [colors]="colors"
+      (selectedColor)="updateColor($event, 1)"
+    ></tui-palette>
+  </ng-template>
+  <ng-template #palette2>
+    <tui-palette
+      [colors]="colors"
+      (selectedColor)="updateColor($event, 2)"
+    ></tui-palette>
+  </ng-template>
+</div>
+
+<div class="buttons">
+  <button
+    tuiButton
+    appearance="secondary"
+    type="button"
+    size="l"
+    (click)="onCancel()"
+  >
+    Отмена
+  </button>
+
+  <button
+    tuiButton
+    type="submit"
+    size="l"
+    icon="tuiIconCheckCircleLarge"
+    (click)="onAccept()"
+  >
+    Подтвердить выбор
+  </button>
+</div>

@@ -16,7 +16,7 @@
       <div class="content__info__about-clothes tui-space_bottom-6">
         <p>Тип одежды</p>
         <span class="tui-text_body-m">{{recognizedClothesType}}</span>
-        <p>Цвет одежды</p>
+        <p>Основной цвет одежды</p>
         <svg width="55" height="55">
           <rect width="50" height="50" [style.fill]="recognizedClothesHexColor"/>
         </svg>
@@ -26,9 +26,9 @@
         <p>Предлагаемые цвета</p>
         <div class="colors">
           <div class="colors-palette">
-            <ng-container *ngFor="let suggestedClothesHexColor of suggestedClothesHexColors">
+            <ng-container *ngFor="let clothesHexColor of (selectedColorsService.colors$ | async)">
               <svg width="50" height="50">
-                <rect width="50" height="50" [style.fill]="suggestedClothesHexColor"/>
+                <rect width="50" height="50" [style.fill]="clothesHexColor"/>
               </svg>
             </ng-container>
           </div>
@@ -46,16 +46,13 @@
         <p>Предалагаемый комплект</p>
         <div class="suggested-clothes">
           <div class="clothes-palette">
-            <img
-              class="suggested-cloth"
-              *ngIf="firstSuggestedClothes.value?.imageSrc; else emptyClothSvg"
-              [src]="firstSuggestedClothes.value?.imageSrc"
-            >
-            <img
-              class="suggested-cloth"
-              *ngIf="secondSuggestedClothes.value?.imageSrc; else emptyClothSvg"
-              [src]="secondSuggestedClothes.value?.imageSrc"
-            >
+            <ng-container *ngFor="let selectedCloth of (selectedClothesService.clothes$ | async)">
+              <img
+                class="suggested-cloth"
+                *ngIf="selectedCloth.imageSrc; else emptyClothSvg"
+                [src]="selectedCloth.imageSrc"
+              >
+            </ng-container>
 
             <ng-template #emptyClothSvg>
               <svg width="50" height="50">
@@ -74,9 +71,9 @@
           ></button>
         </div>
 
-        <p>Выбранный город</p>
+        <p>Город для поиска</p>
         <tui-select
-          formControlName="city"
+          [formControl]="city"
           tuiDropdownLimitWidth="fixed"
           [valueContent]="citySelectItem"
         >

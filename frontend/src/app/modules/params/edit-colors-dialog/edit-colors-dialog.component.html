@@ -27,13 +27,13 @@
 
   <ng-template #palette1>
     <tui-palette
-      [colors]="colors"
+      [colors]="colorsPalette"
       (selectedColor)="updateColor($event, 1)"
     ></tui-palette>
   </ng-template>
   <ng-template #palette2>
     <tui-palette
-      [colors]="colors"
+      [colors]="colorsPalette"
       (selectedColor)="updateColor($event, 2)"
     ></tui-palette>
   </ng-template>

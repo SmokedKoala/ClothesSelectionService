@@ -1,0 +1,58 @@
+@import '~src/style/shared/variables';
+@import '~src/style/shared/typography';
+
+@left-side-width: 350px;
+
+.left-side {
+  position: fixed;
+  top: @header-height + @body-padding;
+  left: @body-padding;
+  bottom: @body-padding;
+  width: @left-side-width;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-image {
+  max-width: 80%;
+  object-fit: contain;
+}
+
+.params {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.colors-palette,
+.clothes-palette {
+  display: flex;
+  gap: .4em;
+  align-items: center;
+}
+
+.suggested-cloth {
+  width: 75px;
+  height: 75px;
+}
+
+.city-name {
+  .get-typography(@font-size-xl, @font-line-height-xl, @font-weight-bold);
+}
+
+.content {
+  max-width: calc(100% - @left-side-width);
+  padding-left: @left-side-width + 50px;
+  padding-right: 28px;
+}
+
+.result-list {
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 24px;
+  min-height: 400px;
+}

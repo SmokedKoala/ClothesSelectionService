@@ -3,6 +3,7 @@ import { TuiDialogContext } from '@taiga-ui/core';
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
 import { FormControl, FormGroup } from '@angular/forms';
 import { bottomClothesValues, footwearValues } from '@shared/consts/clothes-select-values';
+import { SelectedClothesService } from '@core/services/selected-clothes.service';
 
 
 @Component({
@@ -13,8 +14,8 @@ import { bottomClothesValues, footwearValues } from '@shared/consts/clothes-sele
 })
 export class EditClothesDialogComponent {
   readonly form = new FormGroup({
-    firstClothes: new FormControl(this.data.firstSuggestedClothes),
-    secondClothes: new FormControl(this.data.secondSuggestedClothes),
+    firstClothes: new FormControl(this.selectedClothesService.get()[0]),
+    secondClothes: new FormControl(this.selectedClothesService.get()[1]),
   });
 
   readonly firstClothesSelectItems = footwearValues;
@@ -25,7 +26,8 @@ export class EditClothesDialogComponent {
   }
 
   constructor(@Inject(POLYMORPHEUS_CONTEXT)
-              private readonly context: TuiDialogContext<any, any>,) {
+              private readonly context: TuiDialogContext<any, any>,
+              private readonly selectedClothesService: SelectedClothesService,) {
   }
 
   onAccept(): void {

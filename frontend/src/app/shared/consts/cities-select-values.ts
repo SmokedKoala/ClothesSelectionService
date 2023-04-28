@@ -13,3 +13,5 @@ export const citiesValues: City[] = [
   {name: 'Ростов-на-Дону', value: 'rostov'},
   {name: 'Уфа', value: 'ufa'},
 ];
+
+export const DEFAULT_CITY_VALUE = citiesValues[0];

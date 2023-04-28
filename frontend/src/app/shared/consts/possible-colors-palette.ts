@@ -15,3 +15,5 @@ export const possibleColorsPalette = new Map([
   ['Цвет синей пыли', '#003399'],
   ['Серобуромалиновый', '#735184'],
 ]);
+
+export const DEFAULT_COLOR = '#000';

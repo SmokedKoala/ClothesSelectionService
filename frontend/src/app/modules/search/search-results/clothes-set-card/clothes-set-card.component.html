@@ -1,0 +1,14 @@
+<div class="images">
+  <ng-container *ngFor="let clothes of clothesSet">
+    <img class="image" [src]="clothes.imageSrc">
+  </ng-container>
+</div>
+
+<a
+  tuiButton
+  type="button"
+  class="button"
+  [routerLink]="['/search', clothesSetId]"
+>
+  Подробнее
+</a>

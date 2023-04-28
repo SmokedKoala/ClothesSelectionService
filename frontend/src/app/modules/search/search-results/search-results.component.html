@@ -1,0 +1,60 @@
+<div class="left-side">
+  <img
+    loading="lazy"
+    alt="Загруженное изображение"
+    class="user-image tui-space_bottom-6"
+    [src]="imageUrl"
+  />
+
+  <div class="params">
+    <div class="colors-palette">
+      <ng-container *ngFor="let selectedClothesHexColor of (selectedColorsService.colors$ | async)">
+        <svg width="75" height="75">
+          <rect width="75" height="75" [style.fill]="selectedClothesHexColor"/>
+        </svg>
+      </ng-container>
+    </div>
+
+    <div class="clothes-palette">
+      <ng-container *ngFor="let selectedCloth of (selectedClothesService.clothes$ | async)">
+        <img
+          class="suggested-cloth"
+          *ngIf="selectedCloth.imageSrc; else emptyClothSvg"
+          [src]="selectedCloth.imageSrc"
+        >
+      </ng-container>
+
+      <ng-template #emptyClothSvg>
+        <svg width="75" height="75">
+          <rect width="75" height="75" [style.fill]="DEFAULT_COLOR"/>
+        </svg>
+      </ng-template>
+    </div>
+
+    <p class="city-name">{{ (selectedCityService.city$ | async)?.name | uppercase }}</p>
+  </div>
+
+  <a
+    tuiButton
+    type="button"
+    class="tui-space_top-6"
+    appearance="secondary"
+    icon="tuiIconArrowLeft"
+    [routerLink]="['/params']"
+  >
+    Изменить параметры
+  </a>
+</div>
+
+<div class="content">
+  <tui-scrollbar>
+    <div class="result-list">
+      <ng-container *ngFor="let _ of [].constructor(5); let index=index">
+        <cls-clothes-set-card
+          [clothesSet]="[footwearValues[index], bottomClothesValues[index]]"
+          [clothesSetId]="index"
+        ></cls-clothes-set-card>
+      </ng-container>
+    </div>
+  </tui-scrollbar>
+</div>

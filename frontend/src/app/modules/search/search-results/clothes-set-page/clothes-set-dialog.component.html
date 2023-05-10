@@ -1,0 +1,24 @@
+<tui-island
+  *ngFor="let clothes of data.clothesSet"
+  class="card"
+>
+  <img class="image" [src]="clothes.imageSrc">
+
+  <div class="info">
+    <div class="tui-text_h5">{{clothes.name}}</div>
+    <div class="info__description">Хотите выглядеть стильно и оригинально? Тогда наша одежда - это ваш выбор! Идеальное
+      сочетание комфорта, стиля и качества. Не упустите свой шанс!
+    </div>
+    <div class="info__price">
+      999,90 {{ 'RUB' | tuiCurrency }}
+    </div>
+    <a
+      tuiLink
+      href="https://www.lipsum.com/"
+      target="_blank"
+      icon="tuiIconExternalLink"
+    >
+      Посмотреть на сайте
+    </a>
+  </div>
+</tui-island>

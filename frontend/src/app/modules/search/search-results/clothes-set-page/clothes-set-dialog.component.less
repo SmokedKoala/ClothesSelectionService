@@ -1,0 +1,37 @@
+@import '~src/style/shared/variables';
+@import '~src/style/shared/typography';
+
+:host {
+  padding: 28px;
+}
+
+.card {
+  height: 25vh;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  margin: 12px auto;
+  gap: 2em;
+
+  .image {
+    max-height: 100%;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+    .get-typography(@font-size-l, @font-line-height-l);
+
+    &__price {
+      .get-typography(@font-size-l, @font-line-height-l, @font-weight-bold);
+    }
+  }
+}
+
+.button {
+  position: fixed;
+  bottom: @body-padding;
+  right: @body-padding;
+  width: 15vw;
+}

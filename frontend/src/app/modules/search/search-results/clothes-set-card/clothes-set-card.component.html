@@ -4,11 +4,11 @@
   </ng-container>
 </div>
 
-<a
+<button
   tuiButton
   type="button"
   class="button"
-  [routerLink]="['/search', clothesSetId]"
+  (click)="openClothesSetDialog()"
 >
   Подробнее
-</a>
+</button>

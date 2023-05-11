@@ -25,13 +25,19 @@
       <div class="content__info__params">
         <p>Предлагаемые цвета</p>
         <div class="colors">
-          <div class="colors-palette">
-            <ng-container *ngFor="let clothesHexColor of (selectedColorsService.colors$ | async)">
-              <svg width="50" height="50">
-                <rect width="50" height="50" [style.fill]="clothesHexColor"/>
-              </svg>
-            </ng-container>
-          </div>
+          <tui-select
+            [formControl]="colorsPalette"
+            class="colors-palette-select"
+            [tuiTextfieldLabelOutside]="true"
+            [valueContent]="colorsPaletteSelectItem"
+          >
+            Выберите палитру
+            <tui-data-list-wrapper
+              *tuiDataList
+              [items]="colorsPalettes"
+              [itemContent]="colorsPaletteSelectItem"
+            ></tui-data-list-wrapper>
+          </tui-select>
 
           <button
             tuiIconButton
@@ -123,4 +129,16 @@
 
 <ng-template #citySelectItem let-item>
   {{item.name}}
+</ng-template>
+
+<ng-template #colorsPaletteSelectItem let-colors>
+  <div class="colors-palette-item">
+    <svg
+      *ngFor="let color of colors"
+      width="50"
+      height="50"
+    >
+      <rect width="50" height="50" [style.fill]="color"/>
+    </svg>
+  </div>
 </ng-template>

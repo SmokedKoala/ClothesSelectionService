@@ -8,7 +8,7 @@ import { EditColorsDialogComponent } from '@modules/params/edit-colors-dialog/ed
 import { TuiDestroyService, tuiIsPresent } from '@taiga-ui/cdk';
 import { distinctUntilChanged, filter, takeUntil, tap } from 'rxjs';
 import { citiesValues } from '@shared/consts/cities-select-values';
-import { DEFAULT_COLOR } from '@shared/consts/possible-colors-palette';
+import { DEFAULT_COLOR, possibleColorsPalette } from '@shared/consts/possible-colors-palette';
 import { SelectedColorsService } from '@core/services/selected-colors.service';
 import { City } from '@shared/types/city';
 import { SelectedCityService } from '@core/services/selected-city.service';
@@ -27,10 +27,12 @@ export class ParamsComponent implements OnInit {
   readonly firstSuggestedClothesType = 'Обувь';
   readonly secondSuggestedClothesType = 'Поясная одежда';
   readonly cities = citiesValues;
+  readonly colorsPalettes = this.createPalettes();
 
   imageUrl: string | null = null;
 
   city: FormControl<City | null> = new FormControl();
+  colorsPalette: FormControl<string[] | null> = new FormControl();
 
   constructor(
     readonly selectedColorsService: SelectedColorsService,
@@ -49,6 +51,14 @@ export class ParamsComponent implements OnInit {
       }),
       takeUntil(this.destroy$)
     ).subscribe();
+
+    this.selectedColorsService.colors$.pipe(
+      filter(tuiIsPresent),
+      tap(colors => {
+        this.colorsPalette.setValue(colors);
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe();
   }
 
   ngOnInit() {
@@ -60,6 +70,16 @@ export class ParamsComponent implements OnInit {
       )
       .subscribe(city => {
         this.selectedCityService.update(city);
+      });
+
+    this.colorsPalette.valueChanges
+      .pipe(
+        filter(tuiIsPresent),
+        distinctUntilChanged(),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(colors => {
+        this.selectedColorsService.update(colors);
       });
   }
 
@@ -103,5 +123,24 @@ export class ParamsComponent implements OnInit {
           this.selectedColorsService.update(selectedColors);
         },
       );
+  }
+
+  createPalettes(): string[][] {
+    const palettes: string[][] = [];
+    let palette: string[] = [];
+    let index = 0;
+
+    possibleColorsPalette.forEach((value, key) => {
+      palette.push(value);
+
+      if (index % 2 === 1) {
+        palettes.push(palette);
+        palette = [];
+      }
+
+      index++;
+    });
+
+    return palettes;
   }
 }

@@ -31,7 +31,7 @@
             [tuiTextfieldLabelOutside]="true"
             [valueContent]="colorsPaletteSelectItem"
           >
-            Выберите палитру
+            Цветовая палитра
             <tui-data-list-wrapper
               *tuiDataList
               [items]="colorsPalettes"
@@ -51,21 +51,19 @@
 
         <p>Предалагаемый комплект</p>
         <div class="suggested-clothes">
-          <div class="clothes-palette">
-            <ng-container *ngFor="let selectedCloth of (selectedClothesService.clothes$ | async)">
-              <img
-                class="suggested-cloth"
-                *ngIf="selectedCloth.imageSrc; else emptyClothSvg"
-                [src]="selectedCloth.imageSrc"
-              >
-            </ng-container>
-
-            <ng-template #emptyClothSvg>
-              <svg width="50" height="50">
-                <rect width="50" height="50" [style.fill]="recognizedClothesHexColor"/>
-              </svg>
-            </ng-template>
-          </div>
+          <tui-select
+            [formControl]="clothesSet"
+            class="colors-palette-select"
+            [tuiTextfieldLabelOutside]="true"
+            [valueContent]="clothesSetSelectItem"
+          >
+            Комплект одежды
+            <tui-data-list-wrapper
+              *tuiDataList
+              [items]="clothesSets"
+              [itemContent]="clothesSetSelectItem"
+            ></tui-data-list-wrapper>
+          </tui-select>
 
           <button
             tuiIconButton
@@ -132,7 +130,7 @@
 </ng-template>
 
 <ng-template #colorsPaletteSelectItem let-colors>
-  <div class="colors-palette-item">
+  <div class="palette-item">
     <svg
       *ngFor="let color of colors"
       width="50"
@@ -141,4 +139,22 @@
       <rect width="50" height="50" [style.fill]="color"/>
     </svg>
   </div>
+</ng-template>
+
+<ng-template #clothesSetSelectItem let-set>
+  <div class="palette-item">
+    <ng-container *ngFor="let clothes of set">
+      <img
+        *ngIf="clothes.imageSrc; else emptyClothSvg"
+        class="suggested-cloth"
+        [src]="clothes.imageSrc"
+      >
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #emptyClothSvg>
+  <svg width="50" height="50">
+    <rect width="50" height="50" [style.fill]="recognizedClothesHexColor"/>
+  </svg>
 </ng-template>

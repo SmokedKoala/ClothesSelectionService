@@ -13,6 +13,8 @@ import { SelectedColorsService } from '@core/services/selected-colors.service';
 import { City } from '@shared/types/city';
 import { SelectedCityService } from '@core/services/selected-city.service';
 import { SelectedClothesService } from '@core/services/selected-clothes.service';
+import { Clothes } from '@shared/types/clothes';
+import { bottomClothesValues, footwearValues } from '@shared/consts/clothes-select-values';
 
 @Component({
   selector: 'cls-params',
@@ -28,11 +30,13 @@ export class ParamsComponent implements OnInit {
   readonly secondSuggestedClothesType = 'Поясная одежда';
   readonly cities = citiesValues;
   readonly colorsPalettes = this.createPalettes();
+  readonly clothesSets = this.createClothesSets();
 
   imageUrl: string | null = null;
 
   city: FormControl<City | null> = new FormControl();
   colorsPalette: FormControl<string[] | null> = new FormControl();
+  clothesSet: FormControl<Clothes[] | null> = new FormControl();
 
   constructor(
     readonly selectedColorsService: SelectedColorsService,
@@ -59,6 +63,14 @@ export class ParamsComponent implements OnInit {
       }),
       takeUntil(this.destroy$)
     ).subscribe();
+
+    this.selectedClothesService.clothes$.pipe(
+      filter(tuiIsPresent),
+      tap(clothes => {
+        this.clothesSet.setValue(clothes);
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe();
   }
 
   ngOnInit() {
@@ -80,6 +92,16 @@ export class ParamsComponent implements OnInit {
       )
       .subscribe(colors => {
         this.selectedColorsService.update(colors);
+      });
+
+    this.clothesSet.valueChanges
+      .pipe(
+        filter(tuiIsPresent),
+        distinctUntilChanged(),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(clothes => {
+        this.selectedClothesService.update(clothes);
       });
   }
 
@@ -142,5 +164,16 @@ export class ParamsComponent implements OnInit {
     });
 
     return palettes;
+  }
+
+  createClothesSets(): Clothes[][] {
+    const sets: Clothes[][] = [];
+    const numberOfSets = Math.min(bottomClothesValues.length, footwearValues.length);
+
+    for (let i = 0; i < numberOfSets; i++) {
+      sets.push([footwearValues[i], bottomClothesValues[i]]);
+    }
+
+    return sets;
   }
 }

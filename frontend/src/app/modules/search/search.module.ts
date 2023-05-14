@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiDataListWrapperModule, TuiIslandModule, TuiSelectModule } from '@taiga-ui/kit';
 import { ClothesSetDialogComponent } from './search-results/clothes-set-page/clothes-set-dialog.component';
 import { TuiCurrencyPipeModule } from '@taiga-ui/addon-commerce';
+import { JoinModule } from '@shared/pipes/join/join.module';
 
 const TUI_MODULES = [
   TuiButtonModule,
@@ -33,6 +34,7 @@ const TUI_MODULES = [
     FormsModule,
     ReactiveFormsModule,
     RouterLink,
+    JoinModule,
     TUI_MODULES,
   ]
 })

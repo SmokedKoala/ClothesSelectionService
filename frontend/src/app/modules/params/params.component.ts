@@ -5,7 +5,7 @@ import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { EditClothesDialogComponent } from '@modules/params/edit-clothes-dialog/edit-clothes-dialog.component';
 import { FormControl } from '@angular/forms';
 import { EditColorsDialogComponent } from '@modules/params/edit-colors-dialog/edit-colors-dialog.component';
-import { TuiDestroyService, tuiIsPresent } from '@taiga-ui/cdk';
+import { TUI_DEFAULT_MATCHER, TuiDestroyService, tuiIsPresent, tuiPure } from '@taiga-ui/cdk';
 import { distinctUntilChanged, filter, takeUntil, tap } from 'rxjs';
 import { citiesValues } from '@shared/consts/cities-select-values';
 import { DEFAULT_COLOR, possibleColorsPalette } from '@shared/consts/possible-colors-palette';
@@ -15,6 +15,8 @@ import { SelectedCityService } from '@core/services/selected-city.service';
 import { SelectedClothesService } from '@core/services/selected-clothes.service';
 import { Clothes } from '@shared/types/clothes';
 import { bottomClothesValues, footwearValues } from '@shared/consts/clothes-select-values';
+import { possibleShops } from '@shared/consts/possible-shops';
+import { SelectedShopsService } from '@core/services/selected-shops.service';
 
 @Component({
   selector: 'cls-params',
@@ -31,12 +33,15 @@ export class ParamsComponent implements OnInit {
   readonly cities = citiesValues;
   readonly colorsPalettes = this.createPalettes();
   readonly clothesSets = this.createClothesSets();
+  readonly shops: string[] = possibleShops;
 
   imageUrl: string | null = null;
+  shopSearchString: string | null = '';
 
-  city: FormControl<City | null> = new FormControl();
-  colorsPalette: FormControl<string[] | null> = new FormControl();
-  clothesSet: FormControl<Clothes[] | null> = new FormControl();
+  readonly city: FormControl<City | null> = new FormControl();
+  readonly colorsPalette: FormControl<string[] | null> = new FormControl();
+  readonly clothesSet: FormControl<Clothes[] | null> = new FormControl();
+  readonly shopsSelect: FormControl<string[] | null> = new FormControl();
 
   constructor(
     readonly selectedColorsService: SelectedColorsService,
@@ -45,6 +50,7 @@ export class ParamsComponent implements OnInit {
     @Inject(Injector) private readonly injector: Injector,
     private readonly uploadedImageUrlService: UploadedImageUrlService,
     private readonly selectedCityService: SelectedCityService,
+    private readonly selectedShopsService: SelectedShopsService,
     private readonly destroy$: TuiDestroyService) {
     this.imageUrl = this.uploadedImageUrlService.imageUrl;
 
@@ -68,6 +74,14 @@ export class ParamsComponent implements OnInit {
       filter(tuiIsPresent),
       tap(clothes => {
         this.clothesSet.setValue(clothes);
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe();
+
+    this.selectedShopsService.shops$.pipe(
+      filter(tuiIsPresent),
+      tap(shops => {
+        this.shopsSelect.setValue(shops);
       }),
       takeUntil(this.destroy$)
     ).subscribe();
@@ -102,6 +116,16 @@ export class ParamsComponent implements OnInit {
       )
       .subscribe(clothes => {
         this.selectedClothesService.update(clothes);
+      });
+
+    this.shopsSelect.valueChanges
+      .pipe(
+        filter(tuiIsPresent),
+        distinctUntilChanged(),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(shops => {
+        this.selectedShopsService.update(shops);
       });
   }
 
@@ -175,5 +199,10 @@ export class ParamsComponent implements OnInit {
     }
 
     return sets;
+  }
+
+  @tuiPure
+  filterShops(search: string | null): readonly string[] {
+    return this.shops.filter(item => TUI_DEFAULT_MATCHER(item, search || ''));
   }
 }

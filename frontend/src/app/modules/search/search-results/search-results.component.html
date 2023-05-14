@@ -31,7 +31,10 @@
       </ng-template>
     </div>
 
-    <p class="city-name">{{ (selectedCityService.city$ | async)?.name | uppercase }}</p>
+    <div class="text-info">
+      <p class="text_bold">{{ (selectedCityService.city$ | async)?.name | uppercase }}</p>
+      <p><span class="text_bold">Магазины:</span> {{ (selectedShopsService.shops$ | async) | join }}</p>
+    </div>
   </div>
 
   <a

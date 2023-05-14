@@ -6,6 +6,7 @@ import { DEFAULT_COLOR } from '@shared/consts/possible-colors-palette';
 import { SelectedColorsService } from '@core/services/selected-colors.service';
 import { SelectedCityService } from '@core/services/selected-city.service';
 import { SelectedClothesService } from '@core/services/selected-clothes.service';
+import { SelectedShopsService } from '@core/services/selected-shops.service';
 
 @Component({
   selector: 'cls-search-results',
@@ -25,6 +26,7 @@ export class SearchResultsComponent {
     readonly selectedColorsService: SelectedColorsService,
     readonly selectedClothesService: SelectedClothesService,
     readonly selectedCityService: SelectedCityService,
+    readonly selectedShopsService: SelectedShopsService,
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
     @Inject(Injector) private readonly injector: Injector,
     private readonly uploadedImageUrlService: UploadedImageUrlService) {

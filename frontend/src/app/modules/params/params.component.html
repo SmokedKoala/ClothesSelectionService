@@ -88,6 +88,24 @@
             [itemContent]="citySelectItem"
           ></tui-data-list-wrapper>
         </tui-select>
+
+        <p>Магазины</p>
+        <tui-multi-select
+          tuiTextfieldSize="m"
+          class="b-form"
+          [formControl]="shopsSelect"
+          [tuiTextfieldLabelOutside]="true"
+          [(search)]="shopSearchString"
+          [tuiTextfieldCleaner]="true"
+          [rows]="2"
+        >
+          Магазины
+          <tui-data-list-wrapper
+            *tuiDataList
+            tuiMultiSelectGroup
+            [items]="filterShops(shopSearchString)"
+          ></tui-data-list-wrapper>
+        </tui-multi-select>
       </div>
     </tui-island>
   </div>

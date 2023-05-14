@@ -1,8 +1,11 @@
+@import '~src/style/shared/variables';
+
 :host {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: calc(100vh - @header-height);
 }
 
 .file-input {

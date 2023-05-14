@@ -9,7 +9,7 @@ import {
   TuiNotificationModule,
   TuiTextfieldControllerModule
 } from '@taiga-ui/core';
-import { TuiDataListWrapperModule, TuiIslandModule, TuiSelectModule } from '@taiga-ui/kit';
+import { TuiDataListWrapperModule, TuiIslandModule, TuiMultiSelectModule, TuiSelectModule } from '@taiga-ui/kit';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditClothesDialogComponent } from './edit-clothes-dialog/edit-clothes-dialog.component';
 import { EditColorsDialogComponent } from './edit-colors-dialog/edit-colors-dialog.component';
@@ -26,6 +26,7 @@ const TUI_MODULES = [
   TuiHostedDropdownModule,
   TuiPaletteModule,
   TuiTextfieldControllerModule,
+  TuiMultiSelectModule,
 ];
 
 @NgModule({

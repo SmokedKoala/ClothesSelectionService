@@ -27,9 +27,9 @@ def parse_image():
   #   cloth_color.get_complementary_color(image_color_hls))
   image_data["setColors"] = []
   image_data["setColors"].append(
-      cloth_color.get_split_complementary_colors(image_color_hls, 0.42))
+      cloth_color.get_split_complementary_colors(image_color_hls))
   image_data["setColors"].append(
-      cloth_color.get_split_complementary_colors(image_color_hls, 0.33))
+      cloth_color.get_triad_colors(image_color_hls))
   image_data["setColors"].append(
       cloth_color.get_tint_colors(image_color_hls))
 

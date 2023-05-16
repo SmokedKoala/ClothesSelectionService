@@ -18,13 +18,12 @@ def get_complementary_color(hls):
   return normalise_degrees(hls[0] - 0.5), hls[1], hls[2]
 
 
-def get_split_complementary_colors(hls, percent):
-  first_color_hex = get_hex_from_hls(
-      [normalise_degrees(hls[0] - percent), hls[1], hls[2]])
-  second_color_hex = get_hex_from_hls(
-      [normalise_degrees(hls[0] - (percent + (1 - 2 * percent))), hls[1],
-       hls[2]])
-  return [first_color_hex, second_color_hex]
+def get_split_complementary_colors(hls):
+  return get_colors_by_percents(hls, 0.42)
+
+
+def get_triad_colors(hls):
+  return get_colors_by_percents(hls, 0.33)
 
 
 def get_tint_colors(hls):
@@ -32,6 +31,15 @@ def get_tint_colors(hls):
   second = normalise_percents(hls[1] + 0.6)
   first_color_hex = get_hex_from_hls([hls[0], first, first])
   second_color_hex = get_hex_from_hls([hls[0], second, second])
+  return [first_color_hex, second_color_hex]
+
+
+def get_colors_by_percents(hls, percent):
+  first_color_hex = get_hex_from_hls(
+      [normalise_degrees(hls[0] - percent), hls[1], hls[2]])
+  second_color_hex = get_hex_from_hls(
+      [normalise_degrees(hls[0] - 1 + percent), hls[1],
+       hls[2]])
   return [first_color_hex, second_color_hex]
 
 
@@ -50,6 +58,7 @@ def normalise_degrees(degree):
   if (degree < 0):
     return degree + 1
   return degree
+
 
 def normalise_percents(percent):
   if (percent >= 1):

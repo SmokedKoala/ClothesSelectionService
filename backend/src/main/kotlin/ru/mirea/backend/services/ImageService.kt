@@ -6,6 +6,8 @@ import org.springframework.http.HttpMethod
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
+import ru.mirea.backend.model.ClothType
+import ru.mirea.backend.model.ColorType
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -41,24 +43,12 @@ class ImageService {
             String::class.java
         )
         var result =  response.body!!
-        val clothClasses = mapOf(
-            "\"0\"" to "\"Блейзер\"",
-            "\"1\"" to "\"Блузка\"",
-            "\"2\"" to "\"Платье\"",
-            "\"3\"" to "\"Толстовка\"",
-            "\"4\"" to "\"Лонгслив\"",
-            "\"5\"" to "\"Верхняя одежда\"",
-            "\"6\"" to "\"Штаны\"",
-            "\"7\"" to "\"Поло\"",
-            "\"8\"" to "\"Рубашка\"",
-            "\"9\"" to "\"Туфли\"",
-            "\"10\"" to "\"Шорты\"",
-            "\"11\"" to "\"Юбка\"",
-            "\"12\"" to "\"Футболка\"",
-            "\"13\"" to "\"Топ\""
-        )
-        for (i in clothClasses) {
-            result = result.replace(i.key, i.value)
+
+        ColorType.values().forEach {
+            result = result.replace(it.hex, it.rus)
+        }
+        ClothType.values().forEach {
+            result = result.replace(it.key.toString(), it.rus)
         }
 
         return result

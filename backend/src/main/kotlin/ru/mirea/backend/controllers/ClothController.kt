@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import ru.mirea.backend.json.ClothTypeData
+import ru.mirea.backend.json.ColorTypeData
 import ru.mirea.backend.services.ClothService
 import ru.mirea.backend.services.ImageService
 
@@ -15,7 +16,12 @@ class ClothController @Autowired constructor(
 ) {
 
     @GetMapping("/types")
-    fun uploadImage(): List<ClothTypeData> {
+    fun getTypes(): List<ClothTypeData> {
         return clothService.getUniqueClothTypes()
+    }
+
+    @GetMapping("/colors")
+    fun getColors(): List<ColorTypeData> {
+        return clothService.getUniqueColors()
     }
 }
